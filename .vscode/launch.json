@@ -1,0 +1,13 @@
+{
+    "configurations": [
+        {
+            "name": "sanity",
+            "type": "PowerShell",
+            "request": "launch",
+            "script": "${workspaceFolder}/sanity.ps1",
+            "cwd": "${cwd}",
+            "args": ["'${workspaceFolder}/fluid.json'"]
+        },
+
+    ]
+}
