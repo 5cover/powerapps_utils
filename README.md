@@ -74,7 +74,7 @@ if no max: 1
 
 #### Color
 
-`# 6<hex_digit>6 0<hex_digit>2`
+`# 6<hex_digit>6 0(<hex_digit>2)1`
 
 6 for RGB
 

@@ -1,0 +1,36 @@
+{
+  "name": "Button",
+  "modifiers": [
+    "Emphasis",
+    "Variant"
+  ],
+  "properties": {
+    "Color": [
+      {
+        "value": "$white"
+      },
+      {
+        "Emphasis": ["subtle", "minimal"],
+        "value": "$main_color"
+      },
+      {
+        "Emphasis": ["subtle", "minimal"],
+        "Variant": "secondary",
+        "value": "$gray"
+      }
+    ],
+    "Fill": [
+      {
+        "value": "$main_color"
+      },
+      {
+        "Variant": "secondary",
+        "value": "$gray"
+      },
+      {
+        "Emphasis": ["subtle", "minimal"],
+        "value": "$white"
+      }
+    ]
+  }
+}
