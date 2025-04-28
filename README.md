@@ -8,25 +8,6 @@ Converts from a hex color to an RGBA() call.
 
 **Sanity** is a command‑line tool that generates PowerApps formulas representing the different state combinations of a UI component based on design system and component definition JSON files.
 
-### Prerequisites
-
-- PowerShell Core (pwsh) 7.x or higher
-
-### Installation
-
-1. Download **sanity.ps1** from this repository.
-2. Ensure it has execute permissions:
-
-   ```powershell
-   chmod +x ./sanity.ps1
-   ```
-
-3. (Optional) Move to a directory in your PATH:
-
-   ```powershell
-   mv ./sanity.ps1 /usr/local/bin/sanity
-   ```
-
 ### Usage
 
 ```powershell
