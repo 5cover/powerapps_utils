@@ -1,200 +1,114 @@
 {
   "$schema": "schemas/component.json",
   "modifiers": [
-    "Emphasis",
-    "Variant"
+    "Variant",
+    "Emphasis"
   ],
   "name": "Button",
   "properties": {
-    "BorderColor": [
-      {
-        "value": "$border/brand/strong"
-      },
-      {
-        "Variant": "secondary",
-        "value": "$border/neutral/strong"
-      }
-    ],
+    "BorderColor": {
+      "$": "$border/brand/strong",
+      "secondary": "$border/neutral/strong"
+    },
     "BorderStyle": "BorderStyle.Solid",
-    "BorderThickness": [
-      {
-        "value": 0
-      },
-      {
-        "Emphasis": "subtle",
-        "value": 1
+    "BorderThickness": {
+      "$": {
+        "$": 0,
+        "subtle": 1
       }
-    ],
-    "Color": [
-      {
-        "value": "$text/neutral/inverse"
+    },
+    "Color": {
+      "$": {
+        "$": "$text/neutral/inverse",
+        "minimal": "$text/brand/primary",
+        "subtle": "$text/brand/primary"
       },
-      {
-        "Emphasis": [
-          "subtle",
-          "minimal"
-        ],
-        "value": "$text/brand/primary"
+      "secondary": "$text/neutral/primary"
+    },
+    "DisabledBorderColor": {
+      "$": "$border/brand/strong.35",
+      "secondary": "$border/neutral/strong.35"
+    },
+    "DisabledColor": {
+      "$": {
+        "$": "$text/neutral/inverse.35",
+        "minimal": "$text/brand/primary.35",
+        "subtle": "$text/brand/primary.35"
       },
-      {
-        "Variant": "secondary",
-        "value": "$text/neutral/primary"
+      "secondary": "$text/neutral/primary.35"
+    },
+    "DisabledFill": {
+      "$": {
+        "$": "$background/brand/solid.35",
+        "minimal": "$background/brand/primary/translucent/default.35",
+        "subtle": "$background/brand/primary/translucent/default.35"
+      },
+      "secondary": {
+        "$": "$background/neutral/tertiary/translucent/default.35",
+        "minimal": "$background/neutral/primary/translucent/default.35",
+        "subtle": "$background/neutral/primary/translucent/default.35"
       }
-    ],
-    "DisabledBorderColor": "$border/brand/strong.35",
-    "DisabledColor": [
-      {
-        "value": "$text/neutral/inverse.35"
+    },
+    "Fill": {
+      "$": {
+        "$": "$background/brand/solid",
+        "minimal": "$background/brand/primary/translucent/default",
+        "subtle": "$background/brand/primary/translucent/default"
       },
-      {
-        "Emphasis": [
-          "minimal",
-          "subtle"
-        ],
-        "value": "$background/brand/solid.35"
-      },
-      {
-        "Variant": "secondary",
-        "value": "$text/neutral/primary.35"
+      "secondary": {
+        "$": "$background/neutral/tertiary/translucent/default",
+        "minimal": "$background/neutral/primary/translucent/default",
+        "subtle": "$background/neutral/primary/translucent/default"
       }
-    ],
-    "DisabledFill": [
-      {
-        "value": "$background/brand/solid.35"
-      },
-      {
-        "Emphasis": [
-          "minimal",
-          "subtle"
-        ],
-        "value": "$background/brand/primary/translucent/default.35"
-      },
-      {
-        "Variant": "secondary",
-        "value": "$background/neutral/tertiary/translucent/default.35"
-      },
-      {
-        "Variant": "secondary",
-        "Emphasis": [
-          "minimal",
-          "subtle"
-        ],
-        "value": "$background/neutral/primary/translucent/default.35"
-      }
-    ],
-    "Fill": [
-      {
-        "value": "$background/brand/solid"
-      },
-      {
-        "Emphasis": [
-          "minimal",
-          "subtle"
-        ],
-        "value": "$background/brand/primary/translucent/default"
-      },
-      {
-        "Variant": "secondary",
-        "value": "$background/neutral/tertiary/translucent/default"
-      },
-      {
-        "Variant": "secondary",
-        "Emphasis": [
-          "minimal",
-          "subtle"
-        ],
-        "value": "$background/neutral/primary/translucent/default"
-      }
-    ],
+    },
     "FocusedBorderColor": "$border/brand/strong",
     "FocusedBorderThickness": 2,
     "Font": "$font-family/default",
     "HoverBorderColor": "$border/brand/strong/hovered",
-    "HoverColor": [
-      {
-        "value": "$text/neutral/inverse"
+    "HoverColor": {
+      "$": {
+        "$": "$text/neutral/inverse",
+        "minimal": "$text/brand/primary/hovered",
+        "subtle": "$text/brand/primary/hovered"
       },
-      {
-        "Emphasis": [
-          "minimal",
-          "subtle"
-        ],
-        "value": "$text/brand/primary/hovered"
+      "secondary": "$text/neutral/primary"
+    },
+    "HoverFill": {
+      "$": {
+        "$": "$background/brand/solid/hovered",
+        "minimal": "$background/brand/primary/translucent/hovered",
+        "subtle": "$background/brand/primary/translucent/hovered"
       },
-      {
-        "Variant": "secondary",
-        "value": "$text/neutral/primary"
+      "secondary": {
+        "$": "$background/neutral/tertiary/translucent/hovered",
+        "minimal": "$background/neutral/primary/translucent/hovered",
+        "subtle": "$background/neutral/primary/translucent/hovered"
       }
-    ],
-    "HoverFill": [
-      {
-        "value": "$background/brand/solid/hovered"
-      },
-      {
-        "Emphasis": [
-          "minimal",
-          "subtle"
-        ],
-        "value": "$background/brand/primary/translucent/hovered"
-      },
-      {
-        "Variant": "secondary",
-        "value": "$background/neutral/tertiary/translucent/hovered"
-      },
-      {
-        "Variant": "secondary",
-        "Emphasis": [
-          "minimal",
-          "subtle"
-        ],
-        "value": "$background/neutral/primary/translucent/hovered"
-      }
-    ],
+    },
     "PaddingBottom": "$spacing/16",
     "PaddingLeft": "$spacing/32",
     "PaddingRight": "$spacing/32",
     "PaddingTop": "$spacing/16",
     "PressedBorderColor": "$border/brand/strong/pressed",
-    "PressedColor": [
-      {
-        "value": "$text/neutral/inverse"
+    "PressedColor": {
+      "$": {
+        "$": "$text/neutral/inverse",
+        "minimal": "$text/brand/primary/pressed",
+        "subtle": "$text/brand/primary/pressed"
       },
-      {
-        "Emphasis": [
-          "minimal",
-          "subtle"
-        ],
-        "value": "$text/brand/primary/pressed"
+      "secondary": "$text/neutral/primary"
+    },
+    "PressedFill": {
+      "$": {
+        "$": "$background/brand/solid/pressed",
+        "minimal": "$background/brand/primary/translucent/pressed",
+        "subtle": "$background/brand/primary/translucent/pressed"
       },
-      {
-        "Variant": "secondary",
-        "value": "$text/neutral/primary"
+      "secondary": {
+        "$": "$background/neutral/tertiary/translucent/pressed",
+        "minimal": "$background/neutral/primary/translucent/pressed",
+        "subtle": "$background/neutral/primary/translucent/pressed"
       }
-    ],
-    "PressedFill": [
-      {
-        "value": "$background/brand/solid/pressed"
-      },
-      {
-        "Emphasis": [
-          "minimal",
-          "subtle"
-        ],
-        "value": "$background/brand/primary/translucent/pressed"
-      },
-      {
-        "Variant": "secondary",
-        "value": "$background/neutral/tertiary/translucent/pressed"
-      },
-      {
-        "Variant": "secondary",
-        "Emphasis": [
-          "minimal",
-          "subtle"
-        ],
-        "value": "$background/neutral/primary/translucent/pressed"
-      }
-    ],
-    "Size": "$font-size/text-sm"
+    }
   }
 }

@@ -10,35 +10,20 @@
     },
     "properties": {
       "type": "object",
-      "additionalProperties": {
-        "oneOf": [
-          {"type": "string"},
-          {"type": "number"},
-          {
-            "type": "array",
-            "items": [
-              {
-                "type": "object",
-                "required": ["value"],
-                "properties": { "value": {"type": "string"} },
-                "additionalItems": false
-              }
-            ],
-            "additionalItems": {
-              "type": "object",
-              "required": ["value"],
-              "properties": { "value": {"type": "string"} },
-              "additionalProperties": {
-                "oneOf": [
-                  { "type": "string"                              },
-                  { "type": "number"                              },
-                  { "type": "array" , "items": {"type": "string"} }
-                ]
-              }
-            }
-          }
-        ]
-      }
+      "additionalProperties": {"$ref": "#/definitions/value"}
+    }
+  },
+  "definitions": {
+    "value": {
+      "oneOf": [
+        {"type": "string"},
+        {"type": "number"},
+        {
+          "type": "object",
+          "required": ["$"],
+          "additionalProperties": {"$ref": "#/definitions/value"}
+        }
+      ]
     }
   }
 }

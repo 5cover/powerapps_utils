@@ -105,5 +105,5 @@ Modifier combinations drive branching logic: the tool generates nested `If` or `
 
 1. **Parse JSON**: Loads the design system and component definitions.
 2. **Convert Values**: Transforms token values (colors, numbers) into PowerApps-friendly representations.
-3. **Build Formulas**: Creates `Switch` or nested `If` formulas for each component property based on modifiers.
+3. **Build Formulas**: Creates `Switch` formulas for each component property based on modifiers.
 4. **Output**: Prints formulas to the console for use in PowerApps.

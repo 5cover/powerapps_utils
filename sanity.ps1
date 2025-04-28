@@ -35,7 +35,7 @@
 param(
     [Parameter()]
     [string]$DesignSystem,
-    [Parameter(ValueFromPipeline=$true)]
+    [Parameter(ValueFromPipeline)]
     [string]$Component,
     [Parameter(Mandatory=$false)]
     [string]$Property
@@ -78,8 +78,9 @@ class Branch {
 }
 
 function ConvertTo-PowerAppsRGBA {
+    [OutputType([string])]
     param(
-        [Parameter(Mandatory=$true)]
+        [Parameter()]
         [ValidatePattern('^#(?:[A-Fa-f0-9]{6}|[A-Fa-f0-9]{8})$')]
         [string]$HexColor,
 
@@ -112,7 +113,9 @@ function ConvertTo-PowerAppsRGBA {
 }
 
 function ConvertTo-ParsedValue {
+    [OutputType([string])]
     param (
+        [Parameter(ValueFromPipeline)]
         [string]$value
     )
 
@@ -130,68 +133,74 @@ function ConvertTo-ParsedValue {
     return $value
 }
 
-function ConvertTo-Formula {
-    param(
-        [PSCustomObject[]]$Decls
-    )
-
-    $branch = $null;
-
-    foreach ($decl in $Decls) {
-        $conditions=@{}
-        foreach ($prop in $decl.PSObject.Properties) {
-            if ($prop.Name -eq 'value') {
-                continue
-            }
-            $values = $prop.Value;
-            if (-not ($values -is [array])) {
-                $values = @($values)
-            }
-            $conditions.($prop.Name) = $values;
-        }
-
-        $branch = [Branch]::new($conditions, (ConvertTo-ParsedValue -value $decl.value), $branch);  
-    }
-
-    <#
-    If(Emphasis='a' or Emphasis='b'; value; else)
-    #>
-
-    return $branch.ToString()
-
-    <#
-    Fill:
-    Switch(Emphasis;
-        "subtle"; $white;
-        "minimal"; $white;
-        $main_color)
-    #>
-
-}
-
 function ConvertTo-Switch {
+    [OutputType([string])]
     param(
         [string]$switchee,
         [hashtable]$cases,
         [string]$default
     )
     if ($cases.Count -eq 0) { return $default }
-    return ("Switch($switchee;" + ($cases.GetEnumerator() | ForEach-Object { '"' + $_.Key + '";' + $_.Value + ';' }) + "$default)")
+    $sb = [System.Text.StringBuilder]::new()
+    [void]$sb.Append("Switch($switchee;")
 
+    $cases.GetEnumerator() | ForEach-Object {
+        [void]$sb.Append("""$($_.Key)"";$($_.Value);")
+    }
+
+    [void]$sb.Append("$default)")
+    return $sb.ToString()
+}
+
+
+function ConvertTo-Formula {
+    [OutputType([string])]
+    param(
+        [Parameter(ValueFromPipeline)]
+        [PSCustomObject]$Decls,
+        [int]$Level = 0
+    )
+
+    $switchee = $global:component.modifiers[$Level]
+    if ($null -eq $switchee) {
+        Write-Error "too much nesting: $Level"
+        exit 1
+    }
+
+    $cases = @{}
+    $default = $null;
+
+    foreach ($decl in $Decls.PSObject.Properties) {
+        $value = $decl.Value;
+        if ($value -is [PSCustomObject]) {
+            $value = $value | ConvertTo-Formula -Level ($Level + 1)
+        } else {
+            $value = $value | ConvertTo-ParsedValue
+        }
+
+        if ($decl.Name -eq '$') {
+            $default = $value;
+        } else {
+            $cases[$decl.Name] = $value
+        }
+    }
+
+    return ConvertTo-Switch -switchee "$($global:component.name).$switchee" -cases $cases -default $default
 }
 
 function ConvertFrom-Property {
+    [OutputType([void])]
     param (
         $Name,
         $Value
     )
     Write-Output "$($Name) ="
-    if ($Value -isnot [Object[]]) {
+    if ($Value -isnot [PSCustomObject]) {
         $Value = [PSCustomObject]@{
-            value = $Value
+            '$' = $Value
         }
     }
-    ConvertTo-Formula -Decls $Value | Write-Output
+    $Value | ConvertTo-Formula | Write-Output
 }
 
 if ($Property) {
