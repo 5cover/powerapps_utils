@@ -60,7 +60,7 @@ The tool expects:
 
 You can find example files in the `/examples` directory.
 
-### **Configuration File Syntax**
+### Configuration File Syntax
 
 **Design System (`designSystem.json`)**
 
