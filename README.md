@@ -104,17 +104,6 @@ Array of properties
 
 Array of records of "Declaration"
 
-- on: `Record<string, any?>`
-- value: `any`
-
-Design tokens: constants
-
-Helper funcions:
-
-`alpha(color, percentage)`
-
-`hex(rgb_or_rgba)`
-
 - Iterate over declarations
 - Build Power Fx formulas for each property
 - Print them
@@ -133,3 +122,7 @@ optimize what can be optimized to Switch
 - If Emphasis=subtle or minimal: $white
 - Elseif Variant=secondary: $gray
 - Else $main_color
+
+## Todo
+
+- Error on undefined variable (currently null)

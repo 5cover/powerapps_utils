@@ -96,8 +96,8 @@ function ConvertTo-PowerAppsRGBA {
         # Override alpha if opacity percentage is provided
         $a = [math]::Round(($OpacityPercentage / 100), 2)
     }
-
-    return "RGBA($r, $g, $b, $a)"
+    # use current culture
+    return "RGBA($r;$g;$b;$($a.ToString()))"
 }
 
 function ConvertTo-ParsedValue {
@@ -105,7 +105,7 @@ function ConvertTo-ParsedValue {
         [string]$value
     )
 
-    if ($value -match '^\$(\w+)(.*)$') {
+    if ($value -match '^\$([\w/-]+)(.*)$') {
         $value = $global:designSystem.tokens.($Matches.1) + $Matches.2
     }
     if ($value -match '^(#[A-Fa-f0-9]{6}(?:[A-Fa-f0-9]{2})?)(?:\.([0-9]*\.?[0-9]+))?') {
@@ -167,7 +167,7 @@ function ConvertTo-Switch {
 foreach ($prop in $global:component.properties.PSObject.Properties) {
     Write-Output "$($prop.Name) ="
     $value = $prop.Value;
-    if ($value -is [string]) {
+    if ($value -isnot [Object[]]) {
         $value = [PSCustomObject]@{
             value = $value
         }

@@ -1,8 +1,22 @@
 {
   "$schema": "schemas/designSystem.json",
   "tokens": {
-    "main_color": "#007acd",
-    "white": "#ffffff",
-    "gray": "#111111"
+    "background/brand/primary/translucent/default": "#FFFFFF00",
+    "background/brand/primary/translucent/hovered": "#0F55E11A",
+    "background/brand/primary/translucent/pressed": "#0353E740",
+    "background/brand/solid": "#007acd",
+    "background/brand/solid/hovered": "#005AA0",
+    "background/brand/solid/pressed": "#004478",
+    "border/brand/strong": "#007ACD",
+    "border/brand/strong/hovered": "#005AA0",
+    "border/brand/strong/pressed": "#004478",
+    "font-family/default": "Font.Lato",
+    "font-size/text-sm": 14,
+    "spacing/16": 16,
+    "spacing/32": 32,
+    "text/brand/primary": "#007ACD",
+    "text/brand/primary/hovered": "#005AA0",
+    "text/brand/primary/pressed": "#004478",
+    "text/neutral/inverse": "#ffffff"
   }
 }

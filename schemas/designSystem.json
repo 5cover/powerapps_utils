@@ -1,7 +1,13 @@
 {
   "$schema": "https://json-schema.org/draft-07/schema",
   "properties": {
-    "tokens": { "type": "object", "propertyNames": {"pattern": "^\\w+$"} }
+    "tokens": {
+      "additionalProperties": {
+        "oneOf": [ {"type": "string"}, {"type": "number"} ]
+      },
+      "propertyNames": {"pattern": "^[\\w/-]+$"},
+      "type": "object"
+    }
   },
   "required": ["tokens"]
 }

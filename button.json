@@ -1,47 +1,128 @@
 {
   "$schema": "schemas/component.json",
-  "name": "Button",
   "modifiers": [
     "Emphasis",
     "Variant"
   ],
+  "name": "Button",
   "properties": {
+    "BorderColor": "$border/brand/strong",
     "BorderStyle": "BorderStyle.Solid",
+    "BorderThickness": [
+      {
+        "value": 0
+      },
+      {
+        "Emphasis": "subtle",
+        "value": 1
+      }
+    ],
     "Color": [
       {
-        "value": "$white"
+        "value": "$text/neutral/inverse"
       },
       {
         "Emphasis": [
           "subtle",
           "minimal"
         ],
-        "value": "$main_color"
+        "value": "$text/brand/primary"
+      }
+    ],
+    "DisabledBorderColor": "$border/brand/strong.35",
+    "DisabledColor": [
+      {
+        "value": "$text/neutral/inverse.35"
       },
       {
         "Emphasis": [
-          "subtle",
-          "minimal"
+          "minimal",
+          "subtle"
         ],
-        "Variant": "secondary",
-        "value": "$gray"
+        "value": "$background/brand/solid.35"
+      }
+    ],
+    "DisabledFill": [
+      {
+        "value": "$background/brand/solid.35"
+      },
+      {
+        "Emphasis": [
+          "minimal",
+          "subtle"
+        ],
+        "value": "$background/brand/primary/translucent/default"
       }
     ],
     "Fill": [
       {
-        "value": "$main_color"
-      },
-      {
-        "Variant": "secondary",
-        "value": "$gray"
+        "value": "$background/brand/solid"
       },
       {
         "Emphasis": [
-          "subtle",
-          "minimal"
+          "minimal",
+          "subtle"
         ],
-        "value": "$white"
+        "value": "$background/brand/primary/translucent/default"
       }
-    ]
+    ],
+    "FocusedBorderColor": "$border/brand/strong",
+    "FocusedBorderThickness": 2,
+    "Font": "$font-family/default",
+    "HoverBorderColor": "$border/brand/strong/hovered",
+    "HoverColor": [
+      {
+        "value": "$text/neutral/inverse"
+      },
+      {
+        "Emphasis": [
+          "minimal",
+          "subtle"
+        ],
+        "value": "$text/brand/primary/hovered"
+      }
+    ],
+    "HoverFill": [
+      {
+        "value": "$background/brand/solid/hovered"
+      },
+      {
+        "Emphasis": [
+          "minimal",
+          "subtle"
+        ],
+        "value": "$background/brand/primary/translucent/hovered"
+      }
+    ],
+    "PaddingBottom": "$spacing/16",
+    "PaddingLeft": "$spacing/32",
+    "PaddingRight": "$spacing/32",
+    "PaddingTop": "$spacing/16",
+    "PressedBorderColor": "$border/brand/strong/pressed",
+    "PressedColor": [
+      {
+        "value": "$text/neutral/inverse"
+      },
+      {
+        "Emphasis": [
+          "minimal",
+          "subtle"
+        ],
+        "value": "$text/brand/primary/pressed"
+      }
+    ],
+    "PressedFill": [
+      {
+        "value": "$background/brand/solid/pressed"
+      },
+      {
+        "Emphasis": [
+          "minimal",
+          "subtle"
+        ],
+        "value": "$background/brand/primary/translucent/pressed"
+      }
+    ],
+    "Size": "$font-size/text-sm"
   }
 }
