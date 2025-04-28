@@ -6,7 +6,15 @@
   ],
   "name": "Button",
   "properties": {
-    "BorderColor": "$border/brand/strong",
+    "BorderColor": [
+      {
+        "value": "$border/brand/strong"
+      },
+      {
+        "Variant": "secondary",
+        "value": "$border/neutral/strong"
+      }
+    ],
     "BorderStyle": "BorderStyle.Solid",
     "BorderThickness": [
       {
@@ -27,6 +35,10 @@
           "minimal"
         ],
         "value": "$text/brand/primary"
+      },
+      {
+        "Variant": "secondary",
+        "value": "$text/neutral/primary"
       }
     ],
     "DisabledBorderColor": "$border/brand/strong.35",
@@ -40,6 +52,10 @@
           "subtle"
         ],
         "value": "$background/brand/solid.35"
+      },
+      {
+        "Variant": "secondary",
+        "value": "$text/neutral/primary.35"
       }
     ],
     "DisabledFill": [
@@ -51,7 +67,19 @@
           "minimal",
           "subtle"
         ],
-        "value": "$background/brand/primary/translucent/default"
+        "value": "$background/brand/primary/translucent/default.35"
+      },
+      {
+        "Variant": "secondary",
+        "value": "$background/neutral/tertiary/translucent/default.35"
+      },
+      {
+        "Variant": "secondary",
+        "Emphasis": [
+          "minimal",
+          "subtle"
+        ],
+        "value": "$background/neutral/primary/translucent/default.35"
       }
     ],
     "Fill": [
@@ -64,6 +92,18 @@
           "subtle"
         ],
         "value": "$background/brand/primary/translucent/default"
+      },
+      {
+        "Variant": "secondary",
+        "value": "$background/neutral/tertiary/translucent/default"
+      },
+      {
+        "Variant": "secondary",
+        "Emphasis": [
+          "minimal",
+          "subtle"
+        ],
+        "value": "$background/neutral/primary/translucent/default"
       }
     ],
     "FocusedBorderColor": "$border/brand/strong",
@@ -80,6 +120,10 @@
           "subtle"
         ],
         "value": "$text/brand/primary/hovered"
+      },
+      {
+        "Variant": "secondary",
+        "value": "$text/neutral/primary"
       }
     ],
     "HoverFill": [
@@ -92,6 +136,18 @@
           "subtle"
         ],
         "value": "$background/brand/primary/translucent/hovered"
+      },
+      {
+        "Variant": "secondary",
+        "value": "$background/neutral/tertiary/translucent/hovered"
+      },
+      {
+        "Variant": "secondary",
+        "Emphasis": [
+          "minimal",
+          "subtle"
+        ],
+        "value": "$background/neutral/primary/translucent/hovered"
       }
     ],
     "PaddingBottom": "$spacing/16",
@@ -109,6 +165,10 @@
           "subtle"
         ],
         "value": "$text/brand/primary/pressed"
+      },
+      {
+        "Variant": "secondary",
+        "value": "$text/neutral/primary"
       }
     ],
     "PressedFill": [
@@ -121,6 +181,18 @@
           "subtle"
         ],
         "value": "$background/brand/primary/translucent/pressed"
+      },
+      {
+        "Variant": "secondary",
+        "value": "$background/neutral/tertiary/translucent/pressed"
+      },
+      {
+        "Variant": "secondary",
+        "Emphasis": [
+          "minimal",
+          "subtle"
+        ],
+        "value": "$background/neutral/primary/translucent/pressed"
       }
     ],
     "Size": "$font-size/text-sm"

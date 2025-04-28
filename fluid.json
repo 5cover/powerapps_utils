@@ -7,9 +7,18 @@
     "background/brand/solid": "#007acd",
     "background/brand/solid/hovered": "#005AA0",
     "background/brand/solid/pressed": "#004478",
+    "background/neutral/primary/translucent/default": "#FFFFFF00",
+    "background/neutral/primary/translucent/hovered": "#052B5014",
+    "background/neutral/primary/translucent/pressed": "#00284633",
+    "background/neutral/solid": "#60798B",
+    "background/neutral/tertiary/translucent/default": "#052B5014",
+    "background/neutral/tertiary/translucent/hovered": "#00284633",
+    "background/neutral/tertiary/translucent/pressed": "#062D4963",
     "border/brand/strong": "#007ACD",
     "border/brand/strong/hovered": "#005AA0",
     "border/brand/strong/pressed": "#004478",
+    "border/neutral/strong": "#60798B",
+    "border/neutral/strong/pressed": "#334551",
     "font-family/default": "Font.Lato",
     "font-size/text-sm": 14,
     "spacing/16": 16,
@@ -17,6 +26,7 @@
     "text/brand/primary": "#007ACD",
     "text/brand/primary/hovered": "#005AA0",
     "text/brand/primary/pressed": "#004478",
-    "text/neutral/inverse": "#ffffff"
+    "text/neutral/inverse": "#ffffff",
+    "text/neutral/primary": "#171D21"
   }
 }

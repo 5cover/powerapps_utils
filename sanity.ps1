@@ -1,38 +1,50 @@
 #!/usr/bin/env pwsh
 <#
 .SYNOPSIS
-    Build PowerApps formulas to represent state combinations.
+    Generate PowerApps formulas for a UI component based on design system tokens.
 
 .DESCRIPTION
-    todo
+    Reads a design system JSON file (design tokens) and a component JSON file (component definitions),
+    then builds PowerApps formulas representing all state combinations of the specified component properties.
+    This tool simplifies importing design token logic into PowerApps.
 
-.PARAMETER designSystemFile
-    The filename of the JSON file representing the design system. Contains design tokens.
+.PARAMETER DesignSystem
+    Path to the JSON file defining the design system (colors, spacing, fonts).
 
-.PARAMETER componentFile
-    The filename of the JSON file representing the component to build formulas for. Contains the declarations and properties.
+.PARAMETER Component
+    Path to the JSON file defining the component (name, modifiers, properties).
 
-.PARAMETER property
-    The property to generator the formula for. If not provided, formulas are generated for all propeties
+.PARAMETER Property
+    (Optional) Name of a single property to generate. If omitted, formulas are generated for all properties.
 
 .EXAMPLE
-    .\sanity.ps1 fluid.json -property Fill
+    # Generate formulas for all properties
+    .\\sanity.ps1 .\\fluid.json .\\button.json
+
+.EXAMPLE
+    # Generate formula for the Fill property only
+    .\\sanity.ps1 .\\designSystem.json .\\component.json -Property Fill
+
+.NOTES
+    Requires PowerShell Core 7.x or later.
+    Ensure JSON files conform to their respective schemas.
 #>
+
 
 [CmdletBinding()]
 param(
-    [Parameter(Position=0)]
-    [string]$designSystemFile,
-    [Parameter(Position=1, ValueFromPipeline=$true)]
-    [string]$componentFile,
+    [Parameter()]
+    [string]$DesignSystem,
+    [Parameter(ValueFromPipeline=$true)]
+    [string]$Component,
     [Parameter(Mandatory=$false)]
-    [string]$property
+    [string]$Property
 )
 
 $ErrorActionPreference = 'Stop'
 
-$global:designSystem = Get-Content -Raw -Path $designSystemFile | ConvertFrom-Json
-$global:component = Get-Content -Raw -Path $componentFile | ConvertFrom-Json
+$global:designSystem = Get-Content -Raw -Path $DesignSystem | ConvertFrom-Json
+$global:component = Get-Content -Raw -Path $Component | ConvertFrom-Json
 
 class Branch {
     [hashtable]$Conditions # Map<string, any[]>
@@ -89,15 +101,14 @@ function ConvertTo-PowerAppsRGBA {
     if ($hex.Length -eq 8) {
         # If RGBA provided, use provided alpha byte unless opacity is specified
         $alphaByte = [Convert]::ToInt32($hex.Substring(6,2),16)
-        $a = [math]::Round($alphaByte / 255, 2)
+        $a = $alphaByte / 255
     }
 
-    if ($null -ne $OpacityPercentage) {
-        # Override alpha if opacity percentage is provided
-        $a = [math]::Round(($OpacityPercentage / 100), 2)
+    if ($null -eq $OpacityPercentage) {
+        $OpacityPercentage = 100
     }
     # use current culture
-    return "RGBA($r;$g;$b;$($a.ToString()))"
+    return "RGBA($r;$g;$b;$(($a * ($OpacityPercentage / 100)).ToString()))"
 }
 
 function ConvertTo-ParsedValue {
@@ -106,7 +117,12 @@ function ConvertTo-ParsedValue {
     )
 
     if ($value -match '^\$([\w/-]+)(.*)$') {
-        $value = $global:designSystem.tokens.($Matches.1) + $Matches.2
+        $varName = $Matches.1;
+        if (-not ($global:designSystem.tokens | Get-Member $varName)){
+            Write-Error "missing variable '$varName'"
+            exit 1
+        }
+        $value = $global:designSystem.tokens.$varName + $Matches.2
     }
     if ($value -match '^(#[A-Fa-f0-9]{6}(?:[A-Fa-f0-9]{2})?)(?:\.([0-9]*\.?[0-9]+))?') {
         $value = ConvertTo-PowerAppsRGBA -HexColor $Matches.1 -OpacityPercentage $Matches.2
@@ -164,13 +180,29 @@ function ConvertTo-Switch {
 
 }
 
-foreach ($prop in $global:component.properties.PSObject.Properties) {
-    Write-Output "$($prop.Name) ="
-    $value = $prop.Value;
-    if ($value -isnot [Object[]]) {
-        $value = [PSCustomObject]@{
-            value = $value
+function ConvertFrom-Property {
+    param (
+        $Name,
+        $Value
+    )
+    Write-Output "$($Name) ="
+    if ($Value -isnot [Object[]]) {
+        $Value = [PSCustomObject]@{
+            value = $Value
         }
     }
-    ConvertTo-Formula -Decls $value | Write-Output
+    ConvertTo-Formula -Decls $Value | Write-Output
 }
+
+if ($Property) {
+    if (-not ($global:component.properties | Get-Member $Property)){
+        Write-Error "missing property '$Property'"
+        exit 1
+    }
+    ConvertFrom-Property -Name $Property -Value $global:component.properties.$Property
+} else {
+    foreach ($prop in $global:component.properties.PSObject.Properties) {
+        ConvertFrom-Property -Name $prop.Name -Value $prop.Value
+    }
+}
+

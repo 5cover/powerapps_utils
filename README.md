@@ -4,125 +4,106 @@
 
 Converts from a hex color to an RGBA() call.
 
-## sanity
+## Sanity
 
-Objective: generate nested switches for choosing property values in a cartesian product state.
+**Sanity** is a command‑line tool that generates PowerApps formulas representing the different state combinations of a UI component based on design system and component definition JSON files.
 
-Use case: Fluid components.
+### Prerequisites
 
-### Example: button component
+- PowerShell Core (pwsh) 7.x or higher
 
-Property|n|Values
--|-|-
-emphasis|3|default, subtle, minimal
-variant|4|default, secondary, destructive, inverse
+### Installation
 
-3*4 = 12 unique states.
+1. Download **sanity.ps1** from this repository.
+2. Ensure it has execute permissions:
 
-Affeced properties:
+   ```powershell
+   chmod +x ./sanity.ps1
+   ```
 
-- BorderColor
-- Color
-- Fill
+3. (Optional) Move to a directory in your PATH:
 
-- FocusedBorderColor
-- FocusedBorderThickness
+   ```powershell
+   mv ./sanity.ps1 /usr/local/bin/sanity
+   ```
 
-- DisabledBorderColor
-- DisabledColor
-- DisabledFill
+### Usage
 
-- HoverBorderColor
-- HoverColor
-- HoverFill
+```powershell
+./sanity.ps1 <DesignSystem.json> <Component.json> [-Property <PropertyName>]
+```
 
-- PressedBorderColor
-- PressedColor
-- PressedFill
+- `<DesignSystem.json>`: JSON file containing design tokens (colors, fonts, spacing).
+- `<Component.json>`: JSON file defining the UI component (name, modifiers, properties).
+- `-Property` (optional): Specify a single property to generate formulas for. If omitted, the tool processes all properties.
 
-## Main idea
+### Examples
 
-Series of values from least to most specific state for ech propety.
+- Generate formulas for all properties:
 
-Reusable Design tokens index to reuse colors.
+  ```powershell
+  ./sanity.ps1 fluid.json button.json
+  ```
 
-### Metalanguage used
+- Generate formula for the `Fill` property:
 
-Steps separated by whitespace.
+  ```powershell
+  ./sanity.ps1 designSystem.json component.json -Property Fill
+  ```
 
-`<rule>`: reference to another rule
+### Input File Schemas
 
-`6step7`: min 6, max 7
+The tool expects:
 
-`6step*`: min 6, max inf
+- `designSystem.json` conforming to the `designSystem.json` schema.
+- `component.json` conforming to the `component.json` schema.
 
-if no min: 1
+You can find example files in the `/examples` directory.
 
-if no max: 1
+### **Configuration File Syntax**
 
-### Syntax
+**Design System (`designSystem.json`)**
 
-#### Opacity postfix operator
+- **Root Object**: Must contain a `tokens` property, an object mapping token names to values.  
+- **Token Names**: Use alphanumeric characters, underscores, slashes, or hyphens (e.g., `background/brand/solid`, `font-size/text-sm`).  
+- **Values**:
+  - **Color Tokens**: Hex strings in `#RRGGBB` or `#RRGGBBAA` format.  
+    - Optional opacity multiplier: append a dot and percentage (0–100), e.g. `$border/brand/strong.35` applies 35% opacity.  
+  - **Numeric Tokens**: Plain numbers (e.g., spacing, font sizes).  
+  - **Variable References**: To reference a token from elsewhere, use the `$path/to/token` syntax, optionally with an opacity suffix.
 
-`<expression> . <opacity_percentage>`
+**Component Definition (`component.json`)**
 
-`<expresssion>` is an RGB or RGBA color.
+- **Required Properties**:
+  - `name` (string): Component name (e.g., `Button`).  
+  - `modifiers` (string array): List of modifier names that define state axes (e.g., `Emphasis`, `Variant`).  
+  - `properties` (object): Maps CSS-like property names (e.g., `Fill`, `BorderColor`) to either a single value or an array of conditional declarations.
 
-#### Token reference
+- **Property Values**:
+  1. **Single Value**: A string or number applies uniformly across all states.  
 
-`$ <token_name>`
+     ```json
+     "PaddingTop": 16
+     ```
 
-#### Color
+  2. **Conditional Declarations**: An array where each item declares a `value` and optional modifier conditions:
 
-`# 6<hex_digit>6 0(<hex_digit>2)1`
+     ```json
+     "Fill": [
+       { "value": "$background/brand/solid" },
+       { "Emphasis": ["minimal","subtle"], "value": "$background/brand/primary/translucent/default" }
+     ]
+     ```
 
-6 for RGB
+     - **`value`**: A string (possibly a `$` reference) or number.  
+     - **Modifier Keys**: Match names in `modifiers`; each can be a string or an array of strings specifying when this declaration applies.
+     - Declarations are evaluated in order: first match wins, with a default (no modifiers) always first.
 
-2 for alpha byte
+Modifier combinations drive branching logic: the tool generates nested `If` or `Switch` formulas based on these declarations.
 
-#### Number
+### How It Works
 
-`<digit*>.?`
-
-### Fluid Button 
-
-property|emphasis|variant|value
--|-|-|-
-Color|||$white
-DisabledColor|||$white.35
-
-### Fluid Design Tokens
-
-token|value
--|-
-main_color|#007acd
-white|#ffffff
-
-### PowerShell implementation
-
-Array of properties
-
-Array of records of "Declaration"
-
-- Iterate over declarations
-- Build Power Fx formulas for each property
-- Print them
-- Accept a CLI argument to build a specific propety, otherwise do all
-
-## new implementation idea
-
-read declarations from the buttom up (most specific to least specific)
-
-first one must always be default fallback
-
-generate nested If() in an AST
-
-optimize what can be optimized to Switch
-
-- If Emphasis=subtle or minimal: $white
-- Elseif Variant=secondary: $gray
-- Else $main_color
-
-## Todo
-
-- Error on undefined variable (currently null)
+1. **Parse JSON**: Loads the design system and component definitions.
+2. **Convert Values**: Transforms token values (colors, numbers) into PowerApps-friendly representations.
+3. **Build Formulas**: Creates `Switch` or nested `If` formulas for each component property based on modifiers.
+4. **Output**: Prints formulas to the console for use in PowerApps.
