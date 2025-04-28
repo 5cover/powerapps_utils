@@ -46,37 +46,6 @@ $ErrorActionPreference = 'Stop'
 $global:designSystem = Get-Content -Raw -Path $DesignSystem | ConvertFrom-Json
 $global:component = Get-Content -Raw -Path $Component | ConvertFrom-Json
 
-class Branch {
-    [hashtable]$Conditions # Map<string, any[]>
-    $Then # probably string or Branch
-    $Else # probably string or Branch
-
-    Branch([hashtable]$conditions, $then, $else) {
-        $this.Conditions = $conditions
-        $this.Then = $then
-        $this.Else = $else
-        if ($this.Conditions.Count -eq 0 -xor $null -eq $else) {
-            throw "inconsistent state"
-        }
-    }
-
-    [string]ToString() {
-        if ($null -eq $this.Else) { return $this.Then.ToString(); }
-        $condition = ($this.Conditions.GetEnumerator() | ForEach-Object {
-            $key = $_.Key
-            $cond = ($_.Value | ForEach-Object {
-                "$($global:component.name).$key=""$($_)"""
-            }) -join '||'
-            if ($this.Conditions.Count -gt 1 -and $_.Value.Count -gt 1) {
-                "($cond)"
-            } else {
-                $cond
-            }
-        }) -join '&&'
-        return "If($condition;$($this.Then);$($this.Else))"
-    }
-}
-
 function ConvertTo-PowerAppsRGBA {
     [OutputType([string])]
     param(
