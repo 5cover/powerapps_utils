@@ -1,4 +1,5 @@
 {
+  "$schema": "schemas/designSystem.json",
   "tokens": {
     "main_color": "#007acd",
     "white": "#ffffff",

@@ -166,5 +166,11 @@ function ConvertTo-Switch {
 
 foreach ($prop in $global:component.properties.PSObject.Properties) {
     Write-Output "$($prop.Name) ="
-    ConvertTo-Formula -Decls $prop.Value | Write-Output
+    $value = $prop.Value;
+    if ($value -is [string]) {
+        $value = [PSCustomObject]@{
+            value = $value
+        }
+    }
+    ConvertTo-Formula -Decls $value | Write-Output
 }

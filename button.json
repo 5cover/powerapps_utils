@@ -1,20 +1,28 @@
 {
+  "$schema": "schemas/component.json",
   "name": "Button",
   "modifiers": [
     "Emphasis",
     "Variant"
   ],
   "properties": {
+    "BorderStyle": "BorderStyle.Solid",
     "Color": [
       {
         "value": "$white"
       },
       {
-        "Emphasis": ["subtle", "minimal"],
+        "Emphasis": [
+          "subtle",
+          "minimal"
+        ],
         "value": "$main_color"
       },
       {
-        "Emphasis": ["subtle", "minimal"],
+        "Emphasis": [
+          "subtle",
+          "minimal"
+        ],
         "Variant": "secondary",
         "value": "$gray"
       }
@@ -28,7 +36,10 @@
         "value": "$gray"
       },
       {
-        "Emphasis": ["subtle", "minimal"],
+        "Emphasis": [
+          "subtle",
+          "minimal"
+        ],
         "value": "$white"
       }
     ]
