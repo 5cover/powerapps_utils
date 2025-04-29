@@ -7,78 +7,78 @@
   "name": "Button",
   "properties": {
     "BorderColor": {
-      "$": "$border/brand/strong",
+      "*": "$border/brand/strong",
       "destructive": "$border/status/danger/strong",
       "secondary": "$border/neutral/strong"
     },
     "BorderStyle": "BorderStyle.Solid",
     "BorderThickness": {
-      "$": {
-        "$": 0,
+      "*": {
+        "*": 0,
         "subtle": 1
       }
     },
     "Color": {
-      "$": {
-        "$": "$text/neutral/inverse",
+      "*": {
+        "*": "$text/neutral/inverse",
         "minimal": "$text/brand/primary",
         "subtle": "$text/brand/primary"
       },
       "destructive": {
-        "$": "$text/neutral/inverse",
+        "*": "$text/neutral/inverse",
         "minimal": "$text/status/danger/primary",
         "subtle": "$text/status/danger/primary"
       },
       "secondary": "$text/neutral/primary"
     },
     "DisabledBorderColor": {
-      "$": "$border/brand/strong.35",
+      "*": "$border/brand/strong.35",
       "destructive": "$border/status/danger/strong",
       "secondary": "$border/neutral/strong.35"
     },
     "DisabledColor": {
-      "$": {
-        "$": "$text/neutral/inverse.35",
+      "*": {
+        "*": "$text/neutral/inverse.35",
         "minimal": "$text/brand/primary.35",
         "subtle": "$text/brand/primary.35"
       },
       "destructive": {
-        "$": "$text/neutral/inverse.35",
+        "*": "$text/neutral/inverse.35",
         "minimal": "$text/status/danger/primary.35",
         "subtle": "$text/status/danger/primary.35"
       },
       "secondary": "$text/neutral/primary.35"
     },
     "DisabledFill": {
-      "$": {
-        "$": "$background/brand/solid.35",
+      "*": {
+        "*": "$background/brand/solid.35",
         "minimal": "$background/brand/primary/translucent/default.35",
         "subtle": "$background/brand/primary/translucent/default.35"
       },
       "destructive": {
-        "$": "$background/status/danger/solid.35",
+        "*": "$background/status/danger/solid.35",
         "minimal": "$background/neutral/primary/translucent/default.35",
         "subtle": "$background/neutral/primary/translucent/default.35"
       },
       "secondary": {
-        "$": "$background/neutral/tertiary/translucent/default.35",
+        "*": "$background/neutral/tertiary/translucent/default.35",
         "minimal": "$background/neutral/primary/translucent/default.35",
         "subtle": "$background/neutral/primary/translucent/default.35"
       }
     },
     "Fill": {
-      "$": {
-        "$": "$background/brand/solid",
+      "*": {
+        "*": "$background/brand/solid",
         "minimal": "$background/brand/primary/translucent/default",
         "subtle": "$background/brand/primary/translucent/default"
       },
       "destructive": {
-        "$": "$background/status/danger/solid",
+        "*": "$background/status/danger/solid",
         "minimal": "$background/neutral/primary/translucent/default",
         "subtle": "$background/neutral/primary/translucent/default"
       },
       "secondary": {
-        "$": "$background/neutral/tertiary/translucent/default",
+        "*": "$background/neutral/tertiary/translucent/default",
         "minimal": "$background/neutral/primary/translucent/default",
         "subtle": "$background/neutral/primary/translucent/default"
       }
@@ -87,36 +87,36 @@
     "FocusedBorderThickness": 2,
     "Font": "$font-family/default",
     "HoverBorderColor": {
-      "$": "$border/brand/strong/hovered",
+      "*": "$border/brand/strong/hovered",
       "destructive": "$border/status/danger/strong/hovered",
       "secondary": "$border/neutral/strong/hovered"
     },
     "HoverColor": {
-      "$": {
-        "$": "$text/neutral/inverse",
+      "*": {
+        "*": "$text/neutral/inverse",
         "minimal": "$text/brand/primary/hovered",
         "subtle": "$text/brand/primary/hovered"
       },
       "destructive": {
-        "$": "$text/neutral/inverse",
+        "*": "$text/neutral/inverse",
         "minimal": "$text/status/danger/primary/hovered",
         "subtle": "$text/status/danger/primary/hovered"
       },
       "secondary": "$text/neutral/primary"
     },
     "HoverFill": {
-      "$": {
-        "$": "$background/brand/solid/hovered",
+      "*": {
+        "*": "$background/brand/solid/hovered",
         "minimal": "$background/brand/primary/translucent/hovered",
         "subtle": "$background/brand/primary/translucent/hovered"
       },
       "destructive": {
-        "$": "$background/status/danger/solid/hovered",
+        "*": "$background/status/danger/solid/hovered",
         "minimal": "$background/status/danger/primary/translucent/hovered",
         "subtle": "$background/status/danger/primary/translucent/hovered"
       },
       "secondary": {
-        "$": "$background/neutral/tertiary/translucent/hovered",
+        "*": "$background/neutral/tertiary/translucent/hovered",
         "minimal": "$background/neutral/primary/translucent/hovered",
         "subtle": "$background/neutral/primary/translucent/hovered"
       }
@@ -126,36 +126,36 @@
     "PaddingRight": "$spacing/32",
     "PaddingTop": "$spacing/16",
     "PressedBorderColor": {
-      "$": "$border/brand/strong/pressed",
+      "*": "$border/brand/strong/pressed",
       "destructive": "$border/status/danger/strong/pressed",
       "secondary": "$border/neutral/strong/pressed"
     },
     "PressedColor": {
-      "$": {
-        "$": "$text/neutral/inverse",
+      "*": {
+        "*": "$text/neutral/inverse",
         "minimal": "$text/brand/primary/pressed",
         "subtle": "$text/brand/primary/pressed"
       },
       "destructive": {
-        "$": "$text/neutral/inverse",
+        "*": "$text/neutral/inverse",
         "minimal": "$text/status/danger/primary/pressed",
         "subtle": "$text/status/danger/primary/pressed"
       },
       "secondary": "$text/neutral/primary"
     },
     "PressedFill": {
-      "$": {
-        "$": "$background/brand/solid/pressed",
+      "*": {
+        "*": "$background/brand/solid/pressed",
         "minimal": "$background/brand/primary/translucent/pressed",
         "subtle": "$background/brand/primary/translucent/pressed"
       },
       "destructive": {
-        "$": "$background/status/danger/solid/pressed",
+        "*": "$background/status/danger/solid/pressed",
         "minimal": "$background/status/danger/primary/translucent/pressed",
         "subtle": "$background/status/danger/primary/translucent/pressed"
       },
       "secondary": {
-        "$": "$background/neutral/tertiary/translucent/pressed",
+        "*": "$background/neutral/tertiary/translucent/pressed",
         "minimal": "$background/neutral/primary/translucent/pressed",
         "subtle": "$background/neutral/primary/translucent/pressed"
       }

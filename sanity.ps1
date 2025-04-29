@@ -147,7 +147,7 @@ function ConvertTo-Formula {
             $value = $value | ConvertTo-ParsedValue
         }
 
-        if ($decl.Name -eq '$') {
+        if ($decl.Name -eq '*') {
             $default = $value;
         } else {
             $cases[$decl.Name] = $value
@@ -166,7 +166,7 @@ function ConvertFrom-Property {
     Write-Output "$($Name) ="
     if ($Value -isnot [PSCustomObject]) {
         $Value = [PSCustomObject]@{
-            '$' = $Value
+            '*' = $Value
         }
     }
     $Value | ConvertTo-Formula | Write-Output

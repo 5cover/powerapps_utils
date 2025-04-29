@@ -10,13 +10,13 @@ secondary|\$background/neutral/tertiary/translucent/default|\$background/neutral
 ```json
 {
   "Color": {
-    "": {
-        "": "...",
+    "*": {
+        "*": "...",
         "subtle": "...",
         "minimal": "..."
     },
     "secondary": {
-        "": "...",
+        "*": "...",
         "subtle": "...",
         "minimal": "£minimal"
     }
