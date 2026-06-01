@@ -1,28 +1,28 @@
 {
-  "$schema": "https://json-schema.org/draft-07/schema",
-  "required": ["name", "modifiers", "properties"],
-  "properties": {
-    "name": {"type": "string"},
-    "modifiers": {
-      "type": "array",
-      "items": {"type": "string"},
-      "uniqueItems": true
+  "$schema"    : "https://json-schema.org/draft-07/schema",
+  "required"   : ["name", "modifiers", "properties"],
+  "properties" : {
+    "name"      : {"type": "string"},
+    "modifiers" : {
+      "type"                : "object",
+      "additionalProperties": {
+        "type"      : "object",
+        "required"  : ["default", "values"],
+        "properties": {
+          "default": { "type": "string"                                                   },
+          "values" : { "type": "array",  "items": {"type": "string"}, "uniqueItems": true }
+        }
+      },
+      "uniqueItems"         : true
     },
-    "properties": {
-      "type": "object",
-      "additionalProperties": {"$ref": "#/definitions/value"}
-    }
+    "properties": { "type": "object", "additionalProperties": {"$ref": "#/definitions/value"} }
   },
   "definitions": {
     "value": {
       "oneOf": [
-        {"type": "string"},
-        {"type": "number"},
-        {
-          "type": "object",
-          "required": ["*"],
-          "additionalProperties": {"$ref": "#/definitions/value"}
-        }
+        { "type": "string"                                                                             },
+        { "type": "number"                                                                             },
+        { "type": "object", "required": ["*"], "additionalProperties": {"$ref": "#/definitions/value"} }
       ]
     }
   }

@@ -1,6 +1,6 @@
 {
-  "$schema": "schemas/designSystem.json",
-  "tokens": {
+  "$schema": "../schemas/designSystem.json",
+  "tokens" : {
     "background/brand/primary/translucent/default": "#FFFFFF00",
     "background/brand/primary/translucent/hovered": "#0F55E11A",
     "background/brand/primary/translucent/pressed": "#0353E740",
@@ -41,6 +41,17 @@
     "text/neutral/primary": "#171D21",
     "text/status/danger/primary": "#DB3735",
     "text/status/danger/primary/hovered": "#AA2424",
-    "text/status/danger/primary/pressed": "#7F1D1B"
+    "text/status/danger/primary/pressed": "#7F1D1B",
+    "semantic-size/spacing/4": 4,
+    "semantic-size/spacing/8": 8,
+    "semantic-size/spacing/12": 12,
+    "semantic-size/spacing/16": 16,
+    "semantic-size/spacing/24": 24,
+    "semantic-size/spacing/32": 32,
+    "semantic-size/spacing/48": 48,
+    "semantic-font-size/text/xs/desktop": 12,
+    "semantic-font-size/text/sm/desktop": 14,
+    "semantic-font-size/text/md/desktop": 16,
+    "semantic-font-size/text/lg/desktop": 18
   }
 }
