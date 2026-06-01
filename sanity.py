@@ -2,17 +2,17 @@ import json
 import argparse
 import sys
 import re
+from pathlib import Path
 
-from numpy import number
 from typing import TypedDict, TypeAlias
 
 class DesignSystem(TypedDict):
-    tokens: dict[str, str | float]
+    tokens: dict[str, str | int | float]
 
 
 
-PropBag: TypeAlias = dict[str, 'str | number | PropBag']
-PropValue: TypeAlias = str | number | PropBag
+PropBag: TypeAlias = dict[str, 'str | int | float | PropBag']
+PropValue: TypeAlias = str | int | float | PropBag
 
 class Component(TypedDict):
     name: str
@@ -34,7 +34,7 @@ def convert_to_powerapps_rgba(hex_color: str, opacity_percentage: float | None=N
         a = int(hex_color[6:8], 16) / 255
     if opacity_percentage is None:
         opacity_percentage = 100
-    return f"RGBA({r};{g};{b};{a * (opacity_percentage / 100)})"
+    return f"RGBA({r},{g},{b},{a * (opacity_percentage / 100)})"
 
 
 def convert_to_parsed_value(value: str, design_system: DesignSystem):
@@ -55,9 +55,9 @@ def convert_to_parsed_value(value: str, design_system: DesignSystem):
 def convert_to_switch(switchee: str, cases: dict[str, str], default: str | None):
     if not cases:
         return default
-    parts = [f'Switch({switchee};']
+    parts = [f'Switch({switchee},']
     for k, v in cases.items():
-        parts.append(f'"{k}";{v};')
+        parts.append(f'"{k}",{v},')
     parts.append(f'{default})')
     return ''.join(parts)
 
@@ -82,11 +82,28 @@ def convert_to_formula(decls: PropBag, component: Component, design_system: Desi
     return convert_to_switch(f"{component['name']}.{switchee}", cases, default)
 
 
-def convert_from_property(name: str, value: PropValue, component: Component, design_system: DesignSystem):
-    print(f"{name} =")
+def convert_from_property(value: PropValue, component: Component, design_system: DesignSystem):
     if not isinstance(value, dict):
         value = {'*': value}
-    print(convert_to_formula(value, component, design_system))
+    return convert_to_formula(value, component, design_system)
+
+
+def iter_property_formulas(component: Component, design_system: DesignSystem, property_name: str | None):
+    if property_name:
+        if property_name not in component['properties']:
+            sys.exit(f"missing property '{property_name}'")
+        yield property_name, convert_from_property(component['properties'][property_name], component, design_system)
+    else:
+        for prop, value in component['properties'].items():
+            yield prop, convert_from_property(value, component, design_system)
+
+
+def print_powerfx_yaml(name: str, control: str, property_formulas):
+    print(f"- {name}:")
+    print(f"    Control: {control}")
+    print("    Properties:")
+    for prop, formula in property_formulas:
+        print(f"      {prop}: ={formula}")
 
 
 if __name__ == '__main__':
@@ -94,15 +111,16 @@ if __name__ == '__main__':
     parser.add_argument('DesignSystem', type=str, help='Path to the design system JSON file')
     parser.add_argument('Component', type=str, help='Path to the component JSON file')
     parser.add_argument('-Property', type=str, help='Name of a single property to generate', required=False)
+    parser.add_argument('-Name', type=str, help='Name of the control instance in the generated YAML', required=False)
+    parser.add_argument('-Control', type=str, help='Control type/version in the generated YAML', default='Classic/Button@2.2.0')
     args = parser.parse_args()
 
     design_system: DesignSystem = load_json(args.DesignSystem)
     component: Component = load_json(args.Component)
+    name = args.Name or Path(args.Component).stem
 
-    if args.Property:
-        if args.Property not in component['properties']:
-            sys.exit(f"missing property '{args.Property}'")
-        convert_from_property(args.Property, component['properties'][args.Property], component, design_system)
-    else:
-        for prop, value in component['properties'].items():
-            convert_from_property(prop, value, component, design_system)
+    print_powerfx_yaml(
+        name,
+        args.Control,
+        iter_property_formulas(component, design_system, args.Property),
+    )
